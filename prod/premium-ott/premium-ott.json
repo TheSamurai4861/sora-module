@@ -7,62 +7,11 @@
     },
     "version": "1.0.0",
     "language": "Multi-language",
-    "streamType": "MP4/M3U8",
+    "streamType": "MP4",
     "quality": "4K - 1080p - 720p - 480p",
     "baseUrl": "http://premium-ott.com:8080",
     "searchBaseUrl": "http://premium-ott.com:8080/player_api.php",
     "scriptUrl": "https://raw.githubusercontent.com/TheSamurai4861/sora-module/refs/heads/main/prod/premium-ott/premium-ott.js",
     "streamAsyncJS": true,
-    "type": "shows/movies/anime",
-    "protocol": "xtream",
-    "features": {
-        "vod": true,
-        "series": true,
-        "live": false,
-        "epg": false,
-        "search": true,
-        "categories": true,
-        "multiQuality": true,
-        "metadata": true
-    },
-    "endpoints": {
-        "auth": "/player_api.php?username={username}&password={password}",
-        "vodCategories": "/player_api.php?username={username}&password={password}&action=get_vod_categories",
-        "vodStreams": "/player_api.php?username={username}&password={password}&action=get_vod_streams&category_id={category_id}",
-        "vodInfo": "/player_api.php?username={username}&password={password}&action=get_vod_info&vod_id={vod_id}",
-        "seriesCategories": "/player_api.php?username={username}&password={password}&action=get_series_categories",
-        "series": "/player_api.php?username={username}&password={password}&action=get_series&category_id={category_id}",
-        "seriesInfo": "/player_api.php?username={username}&password={password}&action=get_series_info&series_id={series_id}",
-        "vodStream": "/movie/{username}/{password}/{stream_id}.{extension}",
-        "seriesStream": "/series/{username}/{password}/{stream_id}.{extension}"
-    },
-    "config": {
-        "host": "premium-ott.com",
-        "port": 8080,
-        "username": "test",
-        "password": "test",
-        "timeout": 10000,
-        "retries": 3
-    },
-    "statistics": {
-        "vodCategories": 33,
-        "seriesCategories": 38,
-        "totalVOD": "350+",
-        "totalSeries": "254+",
-        "totalEpisodes": "1000+",
-        "lastUpdated": "2024-01-15"
-    },
-    "supportedFormats": [
-        "mp4",
-        "mkv",
-        "avi",
-        "m3u8",
-        "ts"
-    ],
-    "requirements": {
-        "internet": true,
-        "vpn": false,
-        "registration": true,
-        "subscription": true
-    }
+    "type": "shows/movies/anime"
 }
