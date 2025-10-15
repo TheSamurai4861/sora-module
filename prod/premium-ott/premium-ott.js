@@ -4,7 +4,7 @@
 // Configuration globale
 const IPTV_CONFIG = {
     host: 'premium-ott.com',
-    port: 8080,
+    port: 80,
     username: 'dxCgZA7xKM',
     password: 'AqtrAmfU6R'
 };
@@ -29,40 +29,33 @@ function buildPlayerApiUrl(action, params = {}) {
     return url.toString();
 }
 
-// Fonction de recherche dans les catégories VOD
+// Fonction de recherche dans les VOD (optimisée)
 async function searchVOD(query) {
     try {
         console.log(`Recherche VOD pour: ${query}`);
         
-        // Récupération des catégories VOD
-        const categoriesUrl = buildPlayerApiUrl('get_vod_categories');
-        const categoriesResponse = await fetchv2(categoriesUrl);
-        const categories = await categoriesResponse.json();
+        // Récupération directe de tous les VOD streams sans catégorie
+        const vodUrl = buildPlayerApiUrl('get_vod_streams');
+        const vodResponse = await fetchv2(vodUrl);
+        const streams = await vodResponse.json();
         
         const results = [];
         
-        // Recherche dans chaque catégorie
-        for (const category of categories) {
-            const streamsUrl = buildPlayerApiUrl('get_vod_streams', { category_id: category.category_id });
-            const streamsResponse = await fetchv2(streamsUrl);
-            const streams = await streamsResponse.json();
-            
-            // Filtrage par titre
-            const filteredStreams = streams.filter(stream => 
-                stream.name && stream.name.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            filteredStreams.forEach(stream => {
-                results.push({
-                    title: decodeHTMLEntities(stream.name || 'Titre inconnu'),
-                    image: stream.stream_icon || '',
-                    href: `/vod/${stream.stream_id}`,
-                    category: category.category_name,
-                    streamId: stream.stream_id,
-                    type: 'vod'
-                });
+        // Filtrage par titre directement sur tous les streams
+        const filteredStreams = streams.filter(stream => 
+            stream.name && stream.name.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        filteredStreams.forEach(stream => {
+            results.push({
+                title: decodeHTMLEntities(stream.name || 'Titre inconnu'),
+                image: stream.stream_icon || '',
+                href: `/vod/${stream.stream_id}`,
+                category: stream.category_name || 'Non catégorisé',
+                streamId: stream.stream_id,
+                type: 'vod'
             });
-        }
+        });
         
         console.log(`Trouvé ${results.length} résultats VOD`);
         return results;
@@ -73,40 +66,33 @@ async function searchVOD(query) {
     }
 }
 
-// Fonction de recherche dans les séries
+// Fonction de recherche dans les séries (optimisée)
 async function searchSeries(query) {
     try {
         console.log(`Recherche séries pour: ${query}`);
         
-        // Récupération des catégories de séries
-        const categoriesUrl = buildPlayerApiUrl('get_series_categories');
-        const categoriesResponse = await fetchv2(categoriesUrl);
-        const categories = await categoriesResponse.json();
+        // Récupération directe de toutes les séries sans catégorie
+        const seriesUrl = buildPlayerApiUrl('get_series');
+        const seriesResponse = await fetchv2(seriesUrl);
+        const series = await seriesResponse.json();
         
         const results = [];
         
-        // Recherche dans chaque catégorie
-        for (const category of categories) {
-            const seriesUrl = buildPlayerApiUrl('get_series', { category_id: category.category_id });
-            const seriesResponse = await fetchv2(seriesUrl);
-            const series = await seriesResponse.json();
-            
-            // Filtrage par titre
-            const filteredSeries = series.filter(serie => 
-                serie.name && serie.name.toLowerCase().includes(query.toLowerCase())
-            );
-            
-            filteredSeries.forEach(serie => {
-                results.push({
-                    title: decodeHTMLEntities(serie.name || 'Titre inconnu'),
-                    image: serie.cover || '',
-                    href: `/series/${serie.series_id}`,
-                    category: category.category_name,
-                    seriesId: serie.series_id,
-                    type: 'series'
-                });
+        // Filtrage par titre directement sur toutes les séries
+        const filteredSeries = series.filter(serie => 
+            serie.name && serie.name.toLowerCase().includes(query.toLowerCase())
+        );
+        
+        filteredSeries.forEach(serie => {
+            results.push({
+                title: decodeHTMLEntities(serie.name || 'Titre inconnu'),
+                image: serie.cover || '',
+                href: `/series/${serie.series_id}`,
+                category: serie.category_name || 'Non catégorisé',
+                seriesId: serie.series_id,
+                type: 'series'
             });
-        }
+        });
         
         console.log(`Trouvé ${results.length} résultats séries`);
         return results;
