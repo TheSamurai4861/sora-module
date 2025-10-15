@@ -1,6 +1,6 @@
 {
     "sourceName": "Premium OTT IPTV",
-    "iconUrl": "https://premium-ott.com/favicon.ico",
+    "iconUrl": "",
     "author": {
         "name": "Sora Module",
         "icon": "https://cdn-icons-png.flaticon.com/512/3039/3039393.png"
@@ -11,7 +11,7 @@
     "quality": "4K - 1080p - 720p - 480p",
     "baseUrl": "http://premium-ott.com:8080",
     "searchBaseUrl": "http://premium-ott.com:8080/player_api.php",
-    "scriptUrl": "https://raw.githubusercontent.com/your-repo/sora-iptv-module/main/docs/premium-ott/premium-ott.js",
+    "scriptUrl": "https://raw.githubusercontent.com/TheSamurai4861/sora-module/refs/heads/main/prod/premium-ott/premium-ott.js",
     "streamAsyncJS": true,
     "type": "shows/movies/anime",
     "protocol": "xtream",
